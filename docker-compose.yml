@@ -1,0 +1,12 @@
+version: "3"
+services:
+  web:
+    restart: always # 除正常工作外，容器会在任何时候重启，比如遭遇 bug、进程崩溃、docker 重启等情况。
+    build: .
+    environment:
+      - ENVIRONMENT=docker
+    command: python3 manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/code
+    ports:
+      - "8001:8001"

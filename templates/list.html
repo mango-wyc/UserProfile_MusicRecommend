@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if title %}
+        {{ title }}
+    {% else %}
+        音乐推荐系统
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="list-group" style="margin-top: 20px">
+        {% for music in musics %}
+            <div href="#" class="list-group-item flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ music.song_name }}</h5>
+                    <small>{{ music.song_length }} ms</small>
+                </div>
+                <p class="mb-1">
+                    歌手：{{ music.artist_name }} 作曲：{{ music.composer }} 作词：{{ music.lyricist }}
+                </p>
+                <small class="text-muted">流派：{{ music.genre_ids }}</small>
+                <small class="text-muted">语种：{{ music.language }}</small>
+                {% if music in user_likes %}
+                    <p class="mb-1 text-danger">已添加到用户喜欢</p>
+                {% endif %}
+                {% if music in user_dislikes %}
+                    <p class="mb-1 text-warning">已添加到用户不喜欢</p>
+                {% endif %}
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    <a href="/play/{{ music.pk }}" class=" btn btn-outline-info" style="margin:0 20px">播放</a>
+                    <a href="/like/{{ music.pk }}?from={{ request.get_full_path }}" class=" btn btn-outline-danger" style="margin-right: 20px">喜欢</a>
+                    <a href="/dislike/{{ music.pk }}?from={{ request.get_full_path }}" class=" btn btn-outline-warning">不喜欢</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <nav style="margin-top: 20px">
+        <div class="pagination justify-content-center">
+            第{{ musics.number }}页 共{{ musics.paginator.num_pages }}页
+        </div>
+    </nav>
+
+    <nav aria-label="Page navigation example" style="margin-top: 20px">
+        <ul class="pagination justify-content-center">
+            {% if musics.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ musics.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+
+            <li class="page-item">
+                <a class="page-link" href="?page=1">1</a>
+            </li>
+
+            <li class="page-item">
+                <a href="#" class="page-link">...</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{ musics.number|add:1 }}">{{ musics.number|add:1 }}</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{ musics.number|add:2 }}">{{ musics.number|add:2 }}</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{ musics.number|add:3 }}">{{ musics.number|add:3 }}</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{ musics.number|add:4 }}">{{ musics.number|add:4 }}</a>
+            </li>
+
+            <li class="page-item">
+                <a href="#" class="page-link">...</a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{ musics.paginator.num_pages }}">{{ musics.paginator.num_pages }}</a>
+            </li>
+
+            {% if musics.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ musics.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

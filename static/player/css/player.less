@@ -1,0 +1,233 @@
+@charset "utf-8";
+
+.visualizer-player {
+    @font-face {
+        /*自定义字体-用于绘制字体图标*/
+        font-family: 'icomoon';
+        src: url('fonts/icomoon.eot?lawp0h');
+        src: url('fonts/icomoon.eot?lawp0h#iefix') format('embedded-opentype'),
+            url('fonts/icomoon.ttf?lawp0h') format('truetype'),
+            url('fonts/icomoon.woff?lawp0h') format('woff'),
+            url('fonts/icomoon.svg?lawp0h#icomoon') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    [class^="icon-"],
+    [class*=" icon-"] {
+        /*统一设置字体图标*/
+        /* 使用 !important 是要防止与浏览器扩展的问题，改变字体 */
+        font-family: 'icomoon' !important;
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        /* 更好的字体渲染 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #272822;
+    font-family: arial,
+    "Microsoft YaHei";
+    border-radius: 3px;
+
+    canvas {
+        position: absolute;
+    }
+
+    .visualizer-player-tips {
+        position: fixed;
+        top: calc(50vh - 40px);
+        text-align: center;
+        line-height: 30px;
+        left: 0;
+        right: 0;
+        width: 300px;
+        height: 30px;
+        margin: 0 auto;
+        background-color: #272822;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .player-control {
+        position: absolute;
+        height: 32px;
+        width: 20%;
+        top: 40%;
+        margin: 0 0.5%;
+
+        i {
+            margin: 0 5px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #A7A7A7;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        i:hover {
+            color: #FFFFFF;
+        }
+
+        #volumeBox {
+            padding-top: 5px;
+            display: inline-block;
+            width: 35px;
+
+            #volumeBar {
+                position: absolute;
+                margin: -20px 0 0 40px;
+                border-radius: 4px;
+                width: 100px;
+                height: 5px;
+                background: #5a5a5a;
+                cursor: pointer;
+
+                #volumeSize {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    height: 100%;
+                    border-radius: 4px;
+                    background: #258fb8;
+                }
+            }
+        }
+
+        #volumeBox:hover {
+            #volumeBar {
+                background: #FFFFFF;
+            }
+        }
+    }
+
+
+    .song-info {
+        position: absolute;
+        border-bottom: 1px solid #575656;
+        height: 25px;
+        width: 100%;
+        left: 0;
+        top: 0;
+
+        i {
+            position: relative;
+            height: 25px;
+            width: 25px;
+            top: 2px;
+            font-size: 18px;
+            margin: 0 5px 0 0;
+            animation: musicIcon 2.5s infinite;
+            -webkit-animation: musicIcon 2.5s infinite;
+            /*Safari and Chrome*/
+        }
+
+        span {
+            text-align: center;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        .player-state {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            line-height: 25px;
+            text-align: center;
+            background: #272822;
+            border-radius: 4px;
+        }
+
+        #songTitle,
+        #artist,
+        #album,
+        span {
+            margin: 0 5px;
+            cursor: default;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 100%;
+            font-size: 14px;
+            line-height: 25px;
+            float: left;
+        }
+
+        #album,
+        #artist {
+            font-size: 12px;
+        }
+    }
+
+    .player-show {
+        position: absolute;
+        font-size: 14px;
+        left: 30%;
+        height: 50px;
+        width: 70%;
+        top: 30%;
+        cursor: default;
+
+        .player-time {
+            margin: 1% 0 0 0;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .progress {
+            position: absolute;
+            bottom: 15px;
+            border-radius: 4px;
+            left: 0;
+            width: 95%;
+            height: 10px;
+            background: #5a5a5a;
+
+            .player-progress-bar {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                border-radius: 4px;
+                height: 100%;
+                background: #258fb8;
+            }
+        }
+    }
+
+    @keyframes musicIcon {
+        from {
+            font-size: 12px;
+        }
+
+        to {
+            font-size: 18px;
+        }
+    }
+
+    @-webkit-keyframes musicIcon
+
+    /*Safari and Chrome*/
+        {
+        from {
+            font-size: 12px;
+        }
+
+        to {
+            font-size: 18px;
+        }
+    }
+}

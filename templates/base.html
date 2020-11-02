@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="/static/js/jquery.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">音乐推荐系统</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">全部音乐</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/recommend">推荐音乐</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/play">正在播放</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">用户中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">注销</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign_in">登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign_up">注册</a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">管理后台</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="get" action="/search">
+                <input class="form-control mr-sm-2" type="search" placeholder="输入歌曲名称搜索" aria-label="Search" name="keyword">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="action" value="song_name">搜歌曲</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="submit" name="action" value="artist_name">搜歌手</button>
+            </form>
+        </div>
+    </nav>
+
+    {% block alert %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags != 'console' %}
+                    <div class="alert alert-{{ message.tags }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text text-center">Copyright @ MusicRecommend</p>
+        </div>
+        <div class="card-footer text-center">2020</div>
+    </div>
+
+    {% block footer %}{% endblock %}
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正在播放 - {{ music.song_name }}</title>
+    <link rel="stylesheet" href="/static/player/main.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/player.css">
+    <script type="text/javascript" src="/static/js/player.js"></script>
+</head>
+<body>
+<player></player>
+</body>
+
+<script>
+    var play = new Player();
+    play.init({
+        autoPlay: false, //自动播放,2018年1月谷歌浏览器不支持自动播放，谷歌浏览器设置true不能自动播放
+        effect: 0, //频谱效果,不设置或0为随机变化,1为条形柱状,2为环状声波
+        color: null, //颜色 16进制颜色代码,不设置或设置为空(空字符或null)将随机使用默认颜色
+        button: { //设置生成的控制按钮,不设置button默认全部创建
+            prev: true, //上一首
+            play: true, //播放,暂停
+            next: true, //下一首
+            volume: true, //音量
+            progressControl: true, //是否开启进度控制
+        },
+        event: function (e) {
+            //这是一个事件方法,点击控制按钮会到此方法
+            //参数:e.eventType 事件类型
+            //参数:e.describe 事件详情,或参数
+            //e.eventType  prev: 点击上一首,next：点击下一首,play:点击 播放/暂停
+            console.log(e);
+        },
+        energy: function (value) {
+            //此时播放的能量值,时刻变化
+            //console.log(value);
+        },
+        playList: [ //播放列表
+            {
+                title: "{{ music.song_name }}", //音乐标题
+                album: "{{ music.composer }}", //所属专辑
+                artist: "{{ music.artist_name }}", //艺术家
+                mp3: "/static/audio/audio.mp3", //音乐路径
+            },
+            {
+                title: "{{ music.song_name }}", //音乐标题
+                album: "{{ music.composer }}", //所属专辑
+                artist: "{{ music.artist_name }}", //艺术家
+                mp3: "/static/audio/audio.mp3", //音乐路径
+            },
+        ]
+    });
+</script>
+</html>

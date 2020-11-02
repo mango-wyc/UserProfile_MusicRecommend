@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>用户登录</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+<form method="post" class="form-signin">
+    {% csrf_token %}
+
+    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">请先登录~</h1>
+    <label for="inputUserName" class="sr-only">用户名</label>
+    <input type="text" id="inputUserName" class="form-control" placeholder="用户名" name="username" required autofocus>
+    <label for="inputPassword" class="sr-only">密码</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="密码" name="password" required>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> 记住登录状态
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+
+    没有账号，<a href="sign_up">注册</a>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+</form>
+</body>
+</html>

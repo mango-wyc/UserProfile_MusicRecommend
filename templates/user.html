@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}用户中心{% endblock %}
+
+{% block body %}
+
+    <div class="card mt-1 mb-3">
+        <div class="card-header">用户信息</div>
+        <div class="card-body">
+            <h5 class="card-text">用户名：{{ request.user.username }}</h5>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card mb-3">
+            <div class="card-header">流派订阅</div>
+            <div class="card-body">
+
+                {% for genre in genres %}
+                    <div class="custom-control custom-checkbox border-info" style="float: left; margin:5px 10px 5px 5px;">
+                        {% if genre in genre_subscribe %}
+                            <input type="checkbox" class="custom-control-input" id="customCheck-{{ genre }}" name="genres" value="{{ genre }}" checked="checked">
+                        {% else %}
+                            <input type="checkbox" class="custom-control-input" id="customCheck-{{ genre }}" name="genres" value="{{ genre }}">
+                        {% endif %}
+                        <label class="custom-control-label" for="customCheck-{{ genre }}">{{ genre }}</label>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary float-right">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card mb-3">
+            <div class="card-header">语种订阅</div>
+            <div class="card-body">
+
+                {% for language in languages %}
+                    <div class="custom-control custom-checkbox border-info" style="float: left; margin:5px 10px 5px 5px;">
+                        {% if language in language_subscribe %}
+                            <input type="checkbox" class="custom-control-input" id="customCheck-{{ language }}" name="languages" value="{{ language }}" checked="checked">
+                        {% else %}
+                            <input type="checkbox" class="custom-control-input" id="customCheck-{{ language }}" name="languages" value="{{ language }}">
+                        {% endif %}
+                        <label class="custom-control-label" for="customCheck-{{ language }}">{{ language }}</label>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary float-right">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="card mb-3">
+        <div class="card-header">喜欢的音乐</div>
+        <div class=" list-group" style="margin-top: 20px">
+            {% for music in user_likes %}
+                <div href="#" class="list-group-item flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ music.song_name }}</h5>
+                        <small>{{ music.song_length }} ms</small>
+                    </div>
+                    <p class="mb-1">
+                        歌手：{{ music.artist_name }} 作曲：{{ music.composer }} 作词：{{ music.lyricist }}
+                    </p>
+                    <small class="text-muted">流派：{{ music.genre_ids }}</small>
+                    <small class="text-muted">语种：{{ music.language }}</small>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <a href="/play/{{ music.pk }}" class=" btn btn-outline-info" style="margin:0 20px">播放</a>
+                        <a href="/dislike/{{ music.pk }}?from={{ request.get_full_path }}" class=" btn btn-outline-warning">不喜欢</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-header">不喜欢的音乐</div>
+        <div class="list-group" style="margin-top: 20px">
+            {% for music in user_dislikes %}
+                <div href="#" class="list-group-item flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ music.song_name }}</h5>
+                        <small>{{ music.song_length }} ms</small>
+                    </div>
+                    <p class="mb-1">
+                        歌手：{{ music.artist_name }} 作曲：{{ music.composer }} 作词：{{ music.lyricist }}
+                    </p>
+                    <small class="text-muted">流派：{{ music.genre_ids }}</small>
+                    <small class="text-muted">语种：{{ music.language }}</small>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <a href="/play/{{ music.pk }}" class=" btn btn-outline-info" style="margin:0 20px">播放</a>
+                        <a href="/like/{{ music.pk }}?from={{ request.get_full_path }}" class=" btn btn-outline-danger" style="margin-right: 20px">喜欢</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
